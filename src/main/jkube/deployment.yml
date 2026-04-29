@@ -1,0 +1,5 @@
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.opentelemetry.io/inject: "sidecar"

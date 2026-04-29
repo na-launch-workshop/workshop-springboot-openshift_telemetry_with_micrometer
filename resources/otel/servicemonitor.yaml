@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: greeting-otel-metrics
   labels:
-    app: greeting
+    app: micrometer-module
 spec:
   selector:
     app.kubernetes.io/name: micrometer-module
@@ -17,11 +17,11 @@ kind: ServiceMonitor
 metadata:
   name: greeting-otel
   labels:
-    app: greeting
+    app: micrometer-module
 spec:
   selector:
     matchLabels:
-      app: greeting
+      app: micrometer-module
   endpoints:
     - port: otel-metrics
       path: /metrics
