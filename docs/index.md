@@ -2,11 +2,9 @@
 
 **Technology Stack:**
 
-- SpringBoot
+- Springboot
 
-This project uses SpringBoot.
-
-If you want to learn more about SpringBoot, please visit its website: <https://SpringBoot.io/>.
+This project uses Springboot.
 
 ---
 

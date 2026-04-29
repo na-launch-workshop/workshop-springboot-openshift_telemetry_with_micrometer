@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: workshop-springboot-openshift_telemetry_with_micrometer
+  title: Using OpenTelemetry and Micrometer
+  description: |
+    Using Red Hat build of OpenTelemetry with Micrometer
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+#   backstage.io/techdocs-ref: dir:https://<hosted-git-repo>     # use absolute path instead to consolidate techdocs among repo forks
+  tags:
+    - opentelemetry
+    - micrometer
+    - springboot
+# links:
+#   - url: https://<devspaces-url>/#<hosted-git-repo>
+#     title: 🚀 Launch from Dev Spaces
+#     icon: web
+spec:
+  type: module
+  lifecycle: production
+  owner: group:default/workshop-admins
+  subcomponentOf: component:default/workshop-repository

@@ -1,0 +1,37 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: sidecar
+spec:
+  mode: sidecar
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http: {}
+    processors:
+      batch: {}
+    exporters:
+      otlp:
+        # aws
+        endpoint: tempo-tempo-stack-distributor.opentelemetry.svc.cluster.local:4317
+        # local
+        #endpoint: tempo-sample-distributor.observability.svc.cluster.local:4317
+        # lab
+        #endpoint: tempo-tempo-sample-distributor.observability.svc.cluster.local:4317
+        tls:
+          insecure: true
+      prometheus:
+        endpoint: 0.0.0.0:9091
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlp]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]

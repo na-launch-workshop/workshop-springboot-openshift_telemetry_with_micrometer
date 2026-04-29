@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeting-otel-metrics
+  labels:
+    app: greeting
+spec:
+  selector:
+    app.kubernetes.io/name: micrometer-module
+  ports:
+    - name: otel-metrics
+      port: 9091
+      targetPort: 9091
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: greeting-otel
+  labels:
+    app: greeting
+spec:
+  selector:
+    matchLabels:
+      app: greeting
+  endpoints:
+    - port: otel-metrics
+      path: /metrics
+      interval: 30s
