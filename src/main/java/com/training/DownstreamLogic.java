@@ -4,12 +4,13 @@ import org.springframework.stereotype.Service;
 
 import io.opentelemetry.api.trace.Tracer;
 
-import io.micrometer.core.annotation.Timed;
+
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 
 //TASK: Uncomment the import below
-import io.opentelemetry.instrumentation.annotations.WithSpan;
+//import io.opentelemetry.instrumentation.annotations.WithSpan;
+//import io.micrometer.core.annotation.Timed;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -27,8 +28,8 @@ public class DownstreamLogic {
     }
 
     //TASK: Uncomment the annotations below
-    @Timed(value = "app.downstream.logic", histogram = true, percentiles = { 0.5, 0.95 })
-    @WithSpan("downstream.logic")
+    //@Timed(value = "app.downstream.logic", histogram = true, percentiles = { 0.5, 0.95 })
+    //@WithSpan("downstream.logic")
     public LogicResult coreLogic(@SpanAttribute("attempt") int attempt) {
         LogicResult result = new LogicResult();
 
@@ -44,14 +45,16 @@ public class DownstreamLogic {
     }
 
     //TASK: Uncomment the annotations below
-    @Timed(value = "app.downstream.result", histogram = true, percentiles = { 0.5, 0.95 })
-    @WithSpan("downstream.result")
+    //@Timed(value = "app.downstream.result", histogram = true, percentiles = { 0.5, 0.95 })
+    //@WithSpan("downstream.result")
     public boolean evaluateResult(LogicResult result) {
+        
+        //TASK: Uncomment the annotations below
         Span span = Span.current();
 
         span.setAttribute("result.code", result.Code);
         span.setAttribute("result.status", result.Status);
-        span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
+        //span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
 
         sleep(10);
 
@@ -59,8 +62,8 @@ public class DownstreamLogic {
     }
 
     //TASK: This can be used ...
-    @Timed(value = "puzzle.base64.decode", histogram = true)
-    @WithSpan("puzzle.base64.decode")
+    //@Timed(value = "puzzle.base64.decode", histogram = true)
+    //@WithSpan("puzzle.base64.decode")
     public String decodeB64(String input) {
         if (input == null) throw new IllegalArgumentException("input is null");
 
