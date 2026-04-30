@@ -109,7 +109,7 @@ fi
 #mvn clean package -DskipTests -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true -Dquarkus.kubernetes.deploy=true -Dquarkus.openshift.annotations.\"sidecar.opentelemetry.io/inject\"=sidecar
 
 # should work on clean environment
-mvn clean package -DskipTests
+mvn clean package oc:build oc:resource oc:apply -DskipTests
 
 echo ""
 
