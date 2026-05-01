@@ -6,8 +6,12 @@ metadata:
   description: |
     Using Red Hat build of OpenTelemetry with Micrometer
   annotations:
+    backstage.io/kubernetes-id: workshop-springboot-openshift_telemetry_with_micrometer
+    backstage.io/kubernetes-namespace: developers-devspaces
     backstage.io/techdocs-ref: dir:.
-#   backstage.io/techdocs-ref: dir:https://<hosted-git-repo>     # use absolute path instead to consolidate techdocs among repo forks
+#   backstage.io/techdocs-ref: dir:https://<hosted-git-repo>   # use absolute path instead to consolidate techdocs among repo forks
+#   gitlab.com/instance: ""                                    # uncomment these two gitlab.com lines to disable GitLab tabs
+#   gitlab.com/project-slug: ""                                # i.e. Issues, Pull/Merge Requests, CI in entity details
   tags:
     - opentelemetry
     - micrometer
@@ -18,6 +22,6 @@ metadata:
 #     icon: web
 spec:
   type: module
-  lifecycle: production
+  lifecycle: development
   owner: group:default/workshop-admins
   subcomponentOf: component:default/workshop-repository
