@@ -3,3 +3,5 @@ spec:
     metadata:
       annotations:
         sidecar.opentelemetry.io/inject: "sidecar"
+      labels:
+        backstage.io/kubernetes-id: workshop-springboot-openshift_telemetry_with_micrometer

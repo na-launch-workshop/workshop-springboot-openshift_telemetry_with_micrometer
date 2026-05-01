@@ -306,13 +306,13 @@ spec:
 
 Lets deploy these resources to see if we will now get traces and metrics
 
-You can either deploy the resources in src/resources/otel .
+You can either deploy the resources in src/resources/k8s .
 Or you can use the workshop.sh script
 
 Option 1
 
 ```bash
-oc apply -f src/resources/otel/.
+oc apply -f src/resources/k8s/.
 ```
 
 --or--
