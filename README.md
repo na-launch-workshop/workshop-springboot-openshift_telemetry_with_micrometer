@@ -321,6 +321,13 @@ oc apply -f src/resources/otel/.
 workshop.sh components
 ```
 
+You will also want to ensure the pod gets injected with the sidecar container
+
+```bash
+workshop.sh deploy
+```
+
+
 Now go back to Jaeger to see your traces hopefully coming into the system.
 
 ## Step 7.
