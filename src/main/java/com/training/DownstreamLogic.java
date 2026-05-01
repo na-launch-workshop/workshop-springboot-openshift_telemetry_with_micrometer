@@ -9,7 +9,6 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 
 //TASK: Uncomment the import below
-//import io.opentelemetry.instrumentation.annotations.WithSpan;
 //import io.micrometer.core.annotation.Timed;
 
 import java.nio.charset.StandardCharsets;
@@ -31,8 +30,8 @@ public class DownstreamLogic {
     //@Timed(value = "app.downstream.logic", histogram = true, percentiles = { 0.5, 0.95 })
     public LogicResult coreLogic(@SpanAttribute("attempt") int attempt) {
         //TASK: Uncomment the annotations below
-        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
-        //try (var scope = span.makeCurrent()) {
+        //Span newSpan = tracer.spanBuilder("downstreamlogic.corelogic").startSpan();
+        //try (var scope = newSpan.makeCurrent()) {
         
             LogicResult result = new LogicResult();
 
@@ -48,16 +47,17 @@ public class DownstreamLogic {
         
         //TASK: Uncomment the annotations below
         //} finally {
-        //    span.end();
+        //    newSpan.end();
         //}
     }
 
     //TASK: Uncomment the annotations below
     //@Timed(value = "app.downstream.result", histogram = true, percentiles = { 0.5, 0.95 })
     public boolean evaluateResult(LogicResult result) {
+        //Note: Span.current() is context sensitive.  It will inherit the span it is 'within'
         //TASK: Uncomment the annotations below
-        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
-        //try (var scope = span.makeCurrent()) {
+        //Span newSpan = tracer.spanBuilder("downstreamlogic.evaluateresult").startSpan();
+        //try (var scope = newSpan.makeCurrent()) {
 
             Span span = Span.current();
 
@@ -71,7 +71,7 @@ public class DownstreamLogic {
 
         //TASK: Uncomment the annotations below
         //} finally {
-        //    span.end();
+        //    newSpan.end();
         //}
     }
 

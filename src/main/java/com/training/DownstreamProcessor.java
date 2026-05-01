@@ -9,7 +9,6 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 
 //TASK: Uncomment the import below
-//import io.opentelemetry.instrumentation.annotations.WithSpan;
 //import io.micrometer.core.annotation.Timed;
 
 @Service
@@ -26,7 +25,7 @@ public class DownstreamProcessor {
     //TASK: Uncomment the annotations below
     //@Timed(value = "app.downstream.process", histogram = true, percentiles = { 0.5, 0.95 })
     public boolean process(@SpanAttribute("attempt") int attempt) {
-        Span span = tracer.spanBuilder("downstream.process")
+        Span span = tracer.spanBuilder("downstreamprocessor.process")
             .startSpan();
         try (var scope = span.makeCurrent()) {
 
@@ -34,7 +33,7 @@ public class DownstreamProcessor {
             span.setAttribute("result.code", logicResult.Code);
             span.setAttribute("result.status", logicResult.Status);
             return logic.evaluateResult(logicResult);
-            
+
         } finally {
             span.end();
         }

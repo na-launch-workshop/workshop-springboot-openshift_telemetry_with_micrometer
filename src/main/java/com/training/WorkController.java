@@ -32,7 +32,7 @@ public class WorkController {
     @Timed(value = "app.work.duration", histogram = true, percentiles = { 0.5, 0.95 })
     public String doWork() {
 
-        Span span = tracer.spanBuilder("downstream.logic").startSpan();
+        Span span = tracer.spanBuilder("workcontroller.dowork").startSpan();
         try (var scope = span.makeCurrent()) {
 
             inFlight.incrementAndGet();

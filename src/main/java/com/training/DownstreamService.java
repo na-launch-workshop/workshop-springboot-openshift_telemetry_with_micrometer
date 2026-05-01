@@ -8,8 +8,6 @@ import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.StatusCode;
 
-//TASK: Uncomment the import below
-//import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.opentelemetry.api.trace.Tracer;
 
 import static io.opentelemetry.api.common.AttributeKey.longKey;
@@ -29,12 +27,10 @@ public class DownstreamService {
         this.tracer = tracer;
     }
 
-    //TASK: Uncomment the annotation below
-    //@WithSpan("downstream.call")
     public boolean callWithRetry(Counter retryCounter) {
         //TASK: Uncomment the annotations below
-        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
-        //try (var scope = span.makeCurrent()) {
+        //Span newSpan = tracer.spanBuilder("downstreaservice.callwithretry").startSpan();
+        //try (var scope = newSpan.makeCurrent()) {
 
             Span span = Span.current();
             int attempt = 1;
@@ -69,7 +65,7 @@ public class DownstreamService {
 
         //TASK: Uncomment the annotations below
         //} finally {
-        //    span.end();
+        //    newSpan.end();
         //}
     }
 

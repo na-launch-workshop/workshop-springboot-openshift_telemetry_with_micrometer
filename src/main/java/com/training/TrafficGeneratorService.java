@@ -19,6 +19,7 @@ public class TrafficGeneratorService {
     @Scheduled(fixedRate = 2000, initialDelay = 3000)
     void createTraffic() {
         LOG.info("work process");
+        
         try {
             work.doWork();
         } catch (Exception e) {
