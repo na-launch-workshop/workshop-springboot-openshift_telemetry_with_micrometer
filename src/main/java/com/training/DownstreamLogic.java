@@ -46,6 +46,7 @@ public class DownstreamLogic {
 
             return result;
         
+        //TASK: Uncomment the annotations below
         //} finally {
         //    span.end();
         //}
@@ -58,18 +59,17 @@ public class DownstreamLogic {
         //Span span = tracer.spanBuilder("downstream.logic").startSpan();
         //try (var scope = span.makeCurrent()) {
 
-
-            //TASK: Uncomment the annotations below
             Span span = Span.current();
 
             span.setAttribute("result.code", result.Code);
             span.setAttribute("result.status", result.Status);
-            //span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
+            span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
 
             sleep(10);
 
             return result.Status;
 
+        //TASK: Uncomment the annotations below
         //} finally {
         //    span.end();
         //}

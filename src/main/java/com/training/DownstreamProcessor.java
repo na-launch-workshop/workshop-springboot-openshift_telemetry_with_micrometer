@@ -29,10 +29,12 @@ public class DownstreamProcessor {
         Span span = tracer.spanBuilder("downstream.process")
             .startSpan();
         try (var scope = span.makeCurrent()) {
+
             LogicResult logicResult = logic.coreLogic(attempt);
             span.setAttribute("result.code", logicResult.Code);
             span.setAttribute("result.status", logicResult.Status);
             return logic.evaluateResult(logicResult);
+            
         } finally {
             span.end();
         }

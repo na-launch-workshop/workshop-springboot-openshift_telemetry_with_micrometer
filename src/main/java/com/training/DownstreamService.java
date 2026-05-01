@@ -10,6 +10,7 @@ import io.opentelemetry.api.trace.StatusCode;
 
 //TASK: Uncomment the import below
 //import io.opentelemetry.instrumentation.annotations.WithSpan;
+import io.opentelemetry.api.trace.Tracer;
 
 import static io.opentelemetry.api.common.AttributeKey.longKey;
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
@@ -21,45 +22,55 @@ public class DownstreamService {
     private static final int backoffMs = 100;
 
     private final DownstreamProcessor processor;
+    private final Tracer tracer;
 
-    public DownstreamService(DownstreamProcessor processor) {
+    public DownstreamService(DownstreamProcessor processor, Tracer tracer) {
         this.processor = processor;
+        this.tracer = tracer;
     }
 
     //TASK: Uncomment the annotation below
     //@WithSpan("downstream.call")
     public boolean callWithRetry(Counter retryCounter) {
+        //TASK: Uncomment the annotations below
+        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
+        //try (var scope = span.makeCurrent()) {
 
-        Span span = Span.current();
-        int attempt = 1;
+            Span span = Span.current();
+            int attempt = 1;
 
-        while (true) {
-            boolean ok = processor.process(attempt);
+            while (true) {
+                boolean ok = processor.process(attempt);
 
-            span.addEvent("attempt", Attributes.of(
-                    longKey("attempt"), (long) attempt,
-                    stringKey("outcome"), ok ? "ok" : "fail"));
+                span.addEvent("attempt", Attributes.of(
+                        longKey("attempt"), (long) attempt,
+                        stringKey("outcome"), ok ? "ok" : "fail"));
 
-            if (ok) {
-                span.setAttribute("attempts_total", attempt);
-                return true;
+                if (ok) {
+                    span.setAttribute("attempts_total", attempt);
+                    return true;
+                }
+
+                if (attempt >= maxRetries + 1) {
+                    span.setAttribute("attempts_total", attempt);
+                    span.setStatus(StatusCode.ERROR, "retry-exhausted");
+                    return false;
+                }
+
+                retryCounter.increment();
+                span.addEvent("retry", Attributes.of(
+                        AttributeKey.longKey("next_attempt"), (long) (attempt + 1),
+                        AttributeKey.longKey("backoff_ms"), (long) backoffMs,
+                        AttributeKey.stringKey("reason"), "transient"));
+
+                sleep(backoffMs);
+                attempt++;
             }
 
-            if (attempt >= maxRetries + 1) {
-                span.setAttribute("attempts_total", attempt);
-                span.setStatus(StatusCode.ERROR, "retry-exhausted");
-                return false;
-            }
-
-            retryCounter.increment();
-            span.addEvent("retry", Attributes.of(
-                    AttributeKey.longKey("next_attempt"), (long) (attempt + 1),
-                    AttributeKey.longKey("backoff_ms"), (long) backoffMs,
-                    AttributeKey.stringKey("reason"), "transient"));
-
-            sleep(backoffMs);
-            attempt++;
-        }
+        //TASK: Uncomment the annotations below
+        //} finally {
+        //    span.end();
+        //}
     }
 
     private void sleep(long ms) {
