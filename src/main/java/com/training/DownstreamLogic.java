@@ -29,41 +29,53 @@ public class DownstreamLogic {
 
     //TASK: Uncomment the annotations below
     //@Timed(value = "app.downstream.logic", histogram = true, percentiles = { 0.5, 0.95 })
-    //@WithSpan("downstream.logic")
     public LogicResult coreLogic(@SpanAttribute("attempt") int attempt) {
-        LogicResult result = new LogicResult();
+        //TASK: Uncomment the annotations below
+        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
+        //try (var scope = span.makeCurrent()) {
+        
+            LogicResult result = new LogicResult();
 
-        int rnd = RND.nextInt(3);
-        boolean res = rnd == 0;
+            int rnd = RND.nextInt(3);
+            boolean res = rnd == 0;
 
-        result.Code = rnd;
-        result.Status = res;
+            result.Code = rnd;
+            result.Status = res;
 
-        sleep(10);
+            sleep(10);
 
-        return result;
+            return result;
+        
+        //} finally {
+        //    span.end();
+        //}
     }
 
     //TASK: Uncomment the annotations below
     //@Timed(value = "app.downstream.result", histogram = true, percentiles = { 0.5, 0.95 })
-    //@WithSpan("downstream.result")
     public boolean evaluateResult(LogicResult result) {
-        
         //TASK: Uncomment the annotations below
-        Span span = Span.current();
+        //Span span = tracer.spanBuilder("downstream.logic").startSpan();
+        //try (var scope = span.makeCurrent()) {
 
-        span.setAttribute("result.code", result.Code);
-        span.setAttribute("result.status", result.Status);
-        //span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
 
-        sleep(10);
+            //TASK: Uncomment the annotations below
+            Span span = Span.current();
 
-        return result.Status;
+            span.setAttribute("result.code", result.Code);
+            span.setAttribute("result.status", result.Status);
+            //span.setAttribute("result.message", LogicResult.arrayOfResultMessages[result.Code]);
+
+            sleep(10);
+
+            return result.Status;
+
+        //} finally {
+        //    span.end();
+        //}
     }
 
     //TASK: This can be used ...
-    //@Timed(value = "puzzle.base64.decode", histogram = true)
-    //@WithSpan("puzzle.base64.decode")
     public String decodeB64(String input) {
         if (input == null) throw new IllegalArgumentException("input is null");
 

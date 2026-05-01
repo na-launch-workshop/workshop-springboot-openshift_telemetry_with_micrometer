@@ -25,7 +25,6 @@ public class DownstreamProcessor {
 
     //TASK: Uncomment the annotations below
     //@Timed(value = "app.downstream.process", histogram = true, percentiles = { 0.5, 0.95 })
-    //@WithSpan("downstream.process")
     public boolean process(@SpanAttribute("attempt") int attempt) {
         Span span = tracer.spanBuilder("downstream.process")
             .startSpan();
