@@ -1,5 +1,7 @@
 # 🚀 **Module: Using Red Hat build of OpenTelemetry with Micrometer**
 
+This module demonstrates how to troubleshoot in OpenShift using Red Hat build of OpenTelemetry.
+
 **Technology Stack:**
 
 - SpringBoot
@@ -306,13 +308,13 @@ spec:
 
 Lets deploy these resources to see if we will now get traces and metrics
 
-You can either deploy the resources in src/resources/otel .
+You can either deploy the resources in src/resources/k8s .
 Or you can use the workshop.sh script
 
 Option 1
 
 ```bash
-oc apply -f src/resources/otel/.
+oc apply -f src/resources/k8s/.
 ```
 
 --or--
@@ -320,6 +322,13 @@ oc apply -f src/resources/otel/.
 ```bash
 workshop.sh components
 ```
+
+You will also want to ensure the pod gets injected with the sidecar container
+
+```bash
+workshop.sh deploy
+```
+
 
 Now go back to Jaeger to see your traces hopefully coming into the system.
 

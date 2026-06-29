@@ -4,7 +4,7 @@ metadata:
   name: workshop-springboot-openshift_telemetry_with_micrometer
   title: Using OpenTelemetry and Micrometer
   description: |
-    Using Red Hat build of OpenTelemetry with Micrometer
+    Instrument, Trace, and Monitor with OpenTelemetry & Micrometer
   annotations:
     backstage.io/kubernetes-id: workshop-springboot-openshift_telemetry_with_micrometer
     backstage.io/kubernetes-namespace: developers-devspaces

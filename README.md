@@ -1,5 +1,7 @@
 # 🚀 **Module: Using Red Hat build of OpenTelemetry with Micrometer**
 
+This module demonstrates how to troubleshoot in OpenShift using Red Hat build of OpenTelemetry.
+
 **Technology Stack:**
 
 - SpringBoot

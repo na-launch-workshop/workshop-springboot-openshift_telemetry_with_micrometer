@@ -1,5 +1,5 @@
 site_name: Using OpenTelemetry and Micrometer
-site_description: Using Red Hat build of OpenTelemetry with Micrometer
+site_description: Instrument, Trace, and Monitor with OpenTelemetry & Micrometer
 
 nav:
   - Overview: index.md
