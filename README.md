@@ -14,7 +14,7 @@ If you want to learn more about SpringBoot, please visit its website: <https://S
 
 ## 🎯 **Scenario**
 
-Welcome! In this hands-on you’ll use Red Hat build of OpenTelemetry together with Micrometer in a SpringBoot app deployed to OpenShift. You’ll start with a flaky service, instrument it, ship metrics & traces, and use OpenShift Observe -> Metrics (Prometheus) and Jaeger/Tempo to diagnose and fix the issue.
+Welcome! In this hands-on workshop, you’ll use Red Hat build of OpenTelemetry together with Micrometer in a SpringBoot app deployed to OpenShift. You’ll start with a flaky service, instrument it, ship metrics & traces, and use OpenShift Observe -> Metrics (Prometheus) and Jaeger/Tempo to diagnose and fix the issue.
 
 ---
 
@@ -175,7 +175,6 @@ Before we go over the application running and what to fully do lets deploy it in
 
   Either way works and for deploying the application and your any future changes either of these options are what you will use.
 
-
 3. So how does the app work at a high level...
 
   The application simulates a backend service under load. A scheduler fires every 2 seconds and calls the REST endpoint, which hands off to a downstream service that attempts to process a request with up to 3 retries. The logic randomly succeeds or fails to simulate real-world transient errors. Throughout all of this, Micrometer instruments the timing and retry counts while OpenTelemetry traces each step of the call chain.
@@ -305,7 +304,7 @@ Before we go over the application running and what to fully do lets deploy it in
   oc apply -f src/resources/k8s/.
   ```
 
-  --or--
+  Option 2
 
   ```bash
   workshop.sh components
@@ -343,7 +342,7 @@ Before we go over the application running and what to fully do lets deploy it in
   boolean res = true
   ```
 
-## 🥚 **Easter Eggs!**
+## 🥚 **Easter Egg!**
 
 But... did you find the Easter Egg?
 
