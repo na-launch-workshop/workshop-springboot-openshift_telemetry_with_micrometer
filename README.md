@@ -31,13 +31,13 @@ What you’ll do:
 
 ---
 
-### Story
+### **Story**
 
 You’ve been paged: the endpoint is sometimes ~200 ms slower and occasionally fails. Your first clue must come from Micrometer metrics; then you’ll drill down with OpenTelemetry traces to see exactly where the time goes.
 
 ---
 
-### Layout
+### **Layout**
 
 src/main/java/com/training
 
@@ -47,7 +47,7 @@ src/main/java/com/training
 
 ---
 
-### MicroMeter promQL
+### **MicroMeter promQL**
 
 p95 latency
 
@@ -65,7 +65,7 @@ sum(rate(app_work_retries_total[5m]))
 
 ---
 
-### Environment setup
+### **Environment Setup**
 
 There are a few scripts to minimize and validate the environment for the workshop.
 
@@ -73,7 +73,7 @@ First lets run setup-env.sh
 
 ```bash
 chmod +x setup-env.sh
-setup-env.sh
+./setup-env.sh
 ```
 
 This script checks to see if you are logged in and various env variables and capabilies are present.
@@ -101,9 +101,9 @@ After running this you should see some success.
 
 ---
 
-### Workshop core script
+### **Workshop Core Script**
 
-There is workshop script that does some common tasks and has additional checks available.  the setup-env.sh sets this script up among others to be available.
+There is a workshop script that does some common tasks and has additional checks available.  the setup-env.sh sets this script up among others to be available.
 
 ```bash
 workshop.sh

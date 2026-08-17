@@ -8,11 +8,17 @@ attributes:
 components:
   - name: tools        
     container:
-      image: image-registry.openshift-image-registry.svc:5000/openshift/udi-rhel9:latest
+      image: image-registry.openshift-image-registry.svc:5000/workspace-images/fullstack-dev-tools:latest
       env:
         - name: SERVER_ADDRESS
           value: 0.0.0.0
+        - name: VSCODE_DEFAULT_WORKSPACE
+          value: "$(PROJECT_SOURCE)/vscode.code-workspace"
       endpoints:
+        - exposure: none
+          name: kilo-code
+          protocol: tcp
+          targetPort: 4096
         - exposure: none
           name: debug
           protocol: tcp
@@ -22,19 +28,38 @@ components:
           protocol: https
           targetPort: 8080          
           path: /work
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
       cpuLimit: '4'
       cpuRequest: '500m'
       memoryLimit: '6Gi'
       memoryRequest: '2Gi'
       mountSources: true
-  - name: m2
+  - name: projects
     volume:
-      size: 1G
+      size: 50Gi
+  - name: prep-workspace
+    container:
+      args:
+        - '-c'
+        - >-
+          mkdir -p /projects/.bin && cp /usr/bin/oc /projects/.bin/oc && cp /usr/bin/kubectl /projects/.bin/kubectl
+      command:
+        - /bin/bash
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+      mountSources: true
+      sourceMapping: /projects
+      memoryRequest: 128Mi
+      memoryLimit: 256Mi
+      cpuRequest: 10m
+      cpuLimit: 200m
+      env:
+      - name: HOME
+        value: "/projects"
 
 commands:
+  - id: prep-workspace
+    apply:
+      component: prep-workspace
+      label: Pre Start Prep
   - id: 1-package
     exec:
       label: "1. Package the application"
@@ -61,3 +86,8 @@ commands:
       commandLine: "mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'"
       group:
         kind: run
+
+events:
+  preStart:
+    - prep-workspace
+
