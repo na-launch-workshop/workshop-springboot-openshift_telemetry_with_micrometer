@@ -78,6 +78,22 @@
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>openshift-maven-plugin</artifactId>
                 <version>1.16.0</version>
+                <configuration>
+                    <resources>
+                        <controller>
+                            <controllerName>micrometer-module</controllerName>
+                            <type>Deployment</type>
+                        </controller>
+                        <requests>
+                            <cpu>100m</cpu>
+                            <memory>128Mi</memory>
+                        </requests>
+                        <limits>
+                            <cpu>500m</cpu>
+                            <memory>1Gi</memory>
+                        </limits>
+                    </resources>
+                </configuration>
             </plugin>
         </plugins>
     </build>

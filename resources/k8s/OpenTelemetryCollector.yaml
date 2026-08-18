@@ -4,6 +4,13 @@ metadata:
   name: sidecar
 spec:
   mode: sidecar
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 32Mi
   config:
     receivers:
       otlp:
