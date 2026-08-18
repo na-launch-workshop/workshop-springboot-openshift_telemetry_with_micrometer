@@ -15,12 +15,7 @@ spec:
       batch: {}
     exporters:
       otlp:
-        # aws
-        endpoint: tempo-tempo-stack-distributor.opentelemetry.svc.cluster.local:4317
-        # local
-        #endpoint: tempo-sample-distributor.observability.svc.cluster.local:4317
-        # lab
-        #endpoint: tempo-tempo-sample-distributor.observability.svc.cluster.local:4317
+        endpoint: tempo-tempo-distributor.tempo.svc.cluster.local:4317
         tls:
           insecure: true
       prometheus:

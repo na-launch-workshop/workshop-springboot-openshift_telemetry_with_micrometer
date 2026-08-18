@@ -106,7 +106,7 @@ After running this you should see some success.
 There is a workshop script that does some common tasks and has additional checks available.  the setup-env.sh sets this script up among others to be available.
 
 ```bash
-workshop.sh
+./workshop.sh
 ```
 
 The result is
@@ -170,7 +170,7 @@ Before we go over the application running and what to fully do lets deploy it in
   Option 2
 
   ```bash
-  workshop.sh deploy
+  ./workshop.sh deploy
   ```
 
   Either way works and for deploying the application and your any future changes either of these options are what you will use.
@@ -205,7 +205,7 @@ Before we go over the application running and what to fully do lets deploy it in
 
   Notice no traces are available.
 
-5. OTel gives us a sidecar that we can use to collect telemetry and metrics being exposed by an application
+5. OTel gives us a sidecar that we can use to collect telemetry and metrics being exposed by an application:
 
   ```bash
   apiVersion: opentelemetry.io/v1beta1
@@ -225,12 +225,7 @@ Before we go over the application running and what to fully do lets deploy it in
         batch: {}
       exporters:
         otlp:
-          # aws
-          endpoint: tempo-tempo-stack-distributor.opentelemetry.svc.cluster.local:4317
-          # local
-          #endpoint: tempo-sample-distributor.observability.svc.cluster.local:4317
-          # lab
-          #endpoint: tempo-tempo-sample-distributor.observability.svc.cluster.local:4317
+          endpoint: tempo-tempo-distributor.tempo.svc.cluster.local:4317
           tls:
             insecure: true
         prometheus:
@@ -247,7 +242,7 @@ Before we go over the application running and what to fully do lets deploy it in
             exporters: [prometheus]
   ```
 
-  How does it map to our `application.properties`
+  How a service definition for a data pipeline maps to our `application.properties`:
 
   ```bash
   otel.exporter.otlp.endpoint=http://localhost:4318
@@ -260,7 +255,7 @@ Before we go over the application running and what to fully do lets deploy it in
   management.tracing.enabled=true
   ```
 
-  Notice our servicemonitor scraping a new 9091 endpoint
+  Notice our ServiceMonitor scraping a new 9091 endpoint:
 
   ```bash
   apiVersion: v1
@@ -301,19 +296,19 @@ Before we go over the application running and what to fully do lets deploy it in
   Option 1
 
   ```bash
-  oc apply -f src/resources/k8s/.
+  oc apply -f resources/k8s/.
   ```
 
   Option 2
 
   ```bash
-  workshop.sh components
+  ./workshop.sh components
   ```
 
   You will also want to ensure the pod gets injected with the sidecar container
 
   ```bash
-  workshop.sh deploy
+  ./workshop.sh deploy
   ```
 
   Now go back to Jaeger to see your traces hopefully coming into the system.
