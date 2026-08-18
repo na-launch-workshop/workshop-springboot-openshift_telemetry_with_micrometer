@@ -5,3 +5,13 @@ spec:
         sidecar.opentelemetry.io/inject: "sidecar"
       labels:
         backstage.io/kubernetes-id: workshop-springboot-openshift_telemetry_with_micrometer
+    spec:
+      containers:
+        - name: spring-boot
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 500Mi

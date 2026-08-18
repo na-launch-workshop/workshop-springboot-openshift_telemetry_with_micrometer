@@ -170,17 +170,16 @@ echo ""
 echo -e "${YELLOW}6. Checking Current Project...${NC}"
 
 CURRENT_PROJECT=$(oc project -q 2>/dev/null || echo "")
-EXPECTED_PROJECT="${OC_USER}-devspaces"
 
 if [[ -n "$CURRENT_PROJECT" ]]; then
-    if [[ "$CURRENT_PROJECT" == "$EXPECTED_PROJECT" ]]; then
+    if [[ "$CURRENT_PROJECT" == "${OC_USER}-build" || "$CURRENT_PROJECT" == "${OC_USER}-dev" || "$CURRENT_PROJECT" == "${OC_USER}-prod" ]]; then
         print_status "OK" "Current project follows convention: ${CURRENT_PROJECT}"
-    
+
     else
         print_status "WARNING" "Current project does not follow convention"
-        print_status "INFO" "Current: ${CURRENT_PROJECT}, Expected: ${EXPECTED_PROJECT}"
-        print_status "INFO" "You can switch with: oc project ${EXPECTED_PROJECT}"
-    
+        print_status "INFO" "Current: ${CURRENT_PROJECT}, Expected: ${OC_USER}-build, ${OC_USER}-dev, or ${OC_USER}-prod"
+        print_status "INFO" "You can switch with: oc project ${OC_USER}-dev"
+
     fi
 else
     print_status "ERROR" "Cannot determine current OpenShift project"

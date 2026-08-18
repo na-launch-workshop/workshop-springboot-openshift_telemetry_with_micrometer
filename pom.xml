@@ -18,6 +18,10 @@
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jkube.resources.requests.cpu>100m</jkube.resources.requests.cpu>
+        <jkube.resources.requests.memory>128Mi</jkube.resources.requests.memory>
+        <jkube.resources.limits.cpu>500m</jkube.resources.limits.cpu>
+        <jkube.resources.limits.memory>1Gi</jkube.resources.limits.memory>
     </properties>
 
     <dependencies>
@@ -78,22 +82,6 @@
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>openshift-maven-plugin</artifactId>
                 <version>1.16.0</version>
-                <configuration>
-                    <resources>
-                        <controller>
-                            <controllerName>micrometer-module</controllerName>
-                            <type>Deployment</type>
-                        </controller>
-                        <requests>
-                            <cpu>100m</cpu>
-                            <memory>128Mi</memory>
-                        </requests>
-                        <limits>
-                            <cpu>500m</cpu>
-                            <memory>1Gi</memory>
-                        </limits>
-                    </resources>
-                </configuration>
             </plugin>
         </plugins>
     </build>

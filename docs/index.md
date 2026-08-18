@@ -290,13 +290,13 @@ Before we go over the application running and what to fully do lets deploy it in
 
 6. Lets deploy these resources to see if we will now get traces and metrics
 
-  You can either deploy the resources in src/resources/k8s .
-  Or you can use the workshop.sh script
+  You can either deploy the resources in `resources/k8s`
+  Or you can use the `workshop.sh` script
 
   Option 1
 
   ```bash
-  oc apply -f resources/k8s/.
+  oc apply -f resources/k8s
   ```
 
   Option 2
