@@ -16,6 +16,8 @@ If you want to learn more about SpringBoot, please visit its website: <https://S
 
 Welcome! In this hands-on workshop, you’ll use Red Hat build of OpenTelemetry together with Micrometer in a SpringBoot app deployed to OpenShift. You’ll start with a flaky service, instrument it, ship metrics & traces, and use OpenShift Observe -> Metrics (Prometheus) and Jaeger/Tempo to diagnose and fix the issue.
 
+You’ve been paged: the endpoint is sometimes ~200 ms slower and occasionally fails. Your first clue must come from Micrometer metrics; then you’ll drill down with OpenTelemetry traces to see exactly where the time goes.
+
 ---
 
 ## 🧩 **Challenge**
@@ -31,15 +33,11 @@ What you’ll do:
 
 ---
 
-### **Story**
-
-You’ve been paged: the endpoint is sometimes ~200 ms slower and occasionally fails. Your first clue must come from Micrometer metrics; then you’ll drill down with OpenTelemetry traces to see exactly where the time goes.
-
----
+## ☕ **Reviewing the Code**
 
 ### **Layout**
 
-src/main/java/com/training
+In `src/main/java/com/training`:
 
 - WorkResource.java             # The main endpoint with instrumentation already
 - DownstreamService.java        # Called by WorkResource to do processing
@@ -313,29 +311,29 @@ Before we go over the application running and what to fully do lets deploy it in
 
   Now go back to Jaeger to see your traces hopefully coming into the system.
 
-7. Mission Statement
+## 🔍 Mission Statement
 
-  Now that your application is running you should be seeing a stream of errors appearing in your traces. Your mission from here is to use the observability tools at your disposal, traces in Jaeger and metrics in Grafana, to diagnose what is actually going wrong inside the application. Start by uncommenting the instrumentation in the codebase and redeploying to get more visibility into the call chain. There is no prescribed path so feel free to treat this like a real production investigation. Use the spans, attributes, and metrics to narrow down which part of the code is responsible and why.
+Now that your application is running you should be seeing a stream of errors appearing in your traces. Your mission from here is to use the observability tools at your disposal, traces in Jaeger and metrics in Grafana, to diagnose what is actually going wrong inside the application. Start by uncommenting the instrumentation in the code base and redeploying to get more visibility into the call chain. There is no prescribed path so feel free to treat this like a real production investigation. Use the spans, attributes, and metrics to narrow down which part of the code is responsible and why.
 
-  Hint 1.
+### Hint 1.
 
-  The span attributes on evaluateResult are telling you something try looking closely at result.code and result.message across successful and failed traces. Do you see a pattern?
+The span attributes on evaluateResult are telling you something try looking closely at result.code and result.message across successful and failed traces. Do you see a pattern?
 
-  Hint 2.
+### Hint 2.
 
-  The retry counter metric is your friend so how many retries are happening per request on average? What does that tell you about how often the underlying logic is actually succeeding?
+The retry counter metric is your friend so how many retries are happening per request on average? What does that tell you about how often the underlying logic is actually succeeding?
 
-  Hint 3.
+### Hint 3.
 
-  coreLogic is where the fate of each attempt is decided. Look at what it does with a random number and think about the probability of success on any given attempt.
+coreLogic is where the fate of each attempt is decided. Look at what it does with a random number and think about the probability of success on any given attempt.
 
-  Fix... sorta
+### Fix... sorta
 
-  In `DownstreamLogic.coreLogic()`, change one line:
+In `DownstreamLogic.coreLogic()`, change one line:
 
-  ```bash
-  boolean res = true
-  ```
+```bash
+boolean res = true;
+```
 
 ## 🥚 **Easter Egg!**
 
