@@ -23,6 +23,7 @@
         <jkube.resources.limits.cpu>500m</jkube.resources.limits.cpu>
         <jkube.resources.limits.memory>1Gi</jkube.resources.limits.memory>
         <jkube.enricher.jkube-controller.type>Deployment</jkube.enricher.jkube-controller.type>
+        <jkube.generator.from>image-registry.openshift-image-registry.svc:5000/workspace-images/jkube-java:0.0.28</jkube.generator.from>
     </properties>
 
     <dependencies>
@@ -82,7 +83,7 @@
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>openshift-maven-plugin</artifactId>
-                <version>1.16.0</version>
+                <version>1.20.0</version>
                 <configuration>
                     <resources>
                         <openshiftBuildConfig>
